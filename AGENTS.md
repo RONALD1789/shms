@@ -60,6 +60,15 @@ The process exits, the container restart-loops, and nothing is served on port
   npm ignores it because of `--no-package-lock`, so it is safe to delete. After
   changing `package.json`, restart the service so the install reruns.
 
+* **A duplicated route only breaks the dev server if it sees one mid-edit.**
+  Encore recompiles on every save, so a state where two services claim the same
+  path — for example `GET /` while the portal route was added before the API
+  landing page moved to `/docs` — makes its router panic with `Overlapping
+  method route. Handler for 'GET /' already exists` and kills the process. The
+  compose `restart: on-failure` brings the server back as soon as the source is
+  consistent again; nothing in the code needs changing, but if it stays down,
+  look for two services exposing the same path and method.
+
 * **Port 3000 is the API itself**, not a proxy: the service runs
   `encore run --watch --listen 0.0.0.0:3000`. The landing page therefore prints
   its curl examples against `http://0.0.0.0:3000`; replace that with the
@@ -111,8 +120,8 @@ curl -s -X POST "$BASE/projects?auth_user=<user_id>" \
   -d '{"name":"My Project","description":"demo"}'        # 200 with the project
 ```
 
-`GET /` returns the HTML landing page that documents these endpoints — that page
-is what the preview shows.
+`GET /docs` returns the HTML landing page that documents these endpoints; `GET /`
+serves the portal UI, which is what the preview shows.
 
 Tests: `docker compose -f docker-compose.base44.yml exec app npm test`
 (vitest; passes with no test files in the repo).

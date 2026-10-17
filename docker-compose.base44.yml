@@ -1,0 +1,48 @@
+# Base44 dev environment for this Encore.ts multi-service backend.
+#
+# Development only. The app runs from the bind-mounted checkout through Encore's
+# live-reloading dev server (`encore run`), never from a prebuilt image.
+#
+# Two sandbox-specific details, both explained in AGENTS.md:
+#   * the container talks to Encore's local PostgreSQL cluster through the host
+#     Docker socket, and Encore publishes that cluster on 127.0.0.1:<random>,
+#     so the service shares the host network namespace (which is also how the
+#     API ends up on the preview entry point, host port 3000);
+#   * a sandbox-local, unlinked encore.app is mounted over the repo's one, which
+#     points at an Encore Cloud app this workspace has no credentials for.
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .base44/Dockerfile
+    network_mode: host
+    working_dir: /app
+    environment:
+      - BASE44_PREVIEW_MODE
+    volumes:
+      - ./:/app
+      # Dependencies are installed into a volume at startup so the install never
+      # writes into the checkout.
+      - encore-node-modules:/app/node_modules
+      # Encore daemon state and caches, kept across restarts.
+      - encore-home:/root
+      # Encore starts/stops its local PostgreSQL cluster through this socket.
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./.base44/encore.app:/app/encore.app:ro
+    command:
+      - bash
+      - -ec
+      - |
+        npm install --no-package-lock --no-audit --no-fund
+        exec encore run --watch --listen 0.0.0.0:3000
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/ | grep -qE '^(200|401|403)$' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 120s
+
+volumes:
+  encore-node-modules:
+  encore-home:

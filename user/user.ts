@@ -4,9 +4,10 @@ import { Topic } from "encore.dev/pubsub";
 import { SQLDatabase } from "encore.dev/storage/sqldb";
 import crypto from "node:crypto";
 
-// Landing page with setup instructions and API documentation.
+// Landing page with setup instructions and API documentation. The app root
+// serves the School Admin Portal UI, so the docs live under /docs.
 export const index = api.raw(
-  { expose: true, method: "GET", path: "/" },
+  { expose: true, method: "GET", path: "/docs" },
   async (req, resp) => {
     const baseUrl = appMeta().apiBaseUrl;
     resp.setHeader("Content-Type", "text/html");

@@ -1,0 +1,37 @@
+// Inline SVG icon set (24px grid, stroke-based) used across the portal screens.
+const svg = (paths: string, size = 24): string =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="${size}" height="${size}" aria-hidden="true">${paths}</svg>`;
+
+export const icons = {
+  home: svg('<path d="M3 11 12 4l9 7"/><path d="M5.5 9.6V20h13V9.6"/><path d="M10 20v-5h4v5"/>'),
+  users: svg('<path d="M15.5 20v-1.4a4 4 0 0 0-4-4h-5a4 4 0 0 0-4 4V20"/><circle cx="9" cy="7.2" r="3.2"/><path d="M16.5 11.6a3 3 0 1 0-1.1-5.8"/><path d="M21 20v-1.2a3.6 3.6 0 0 0-2.7-3.4"/>'),
+  chart: svg('<path d="M4 20h16"/><rect x="5.5" y="11" width="3.6" height="6.4" rx="1.2"/><rect x="11.2" y="7" width="3.6" height="10.4" rx="1.2"/><rect x="16.9" y="13.6" width="3.6" height="3.8" rx="1.2"/>'),
+  more: svg('<rect x="4" y="4" width="6.6" height="6.6" rx="2"/><rect x="13.4" y="4" width="6.6" height="6.6" rx="2"/><rect x="4" y="13.4" width="6.6" height="6.6" rx="2"/><rect x="13.4" y="13.4" width="6.6" height="6.6" rx="2"/>'),
+  bell: svg('<path d="M18 16.5H6l1.2-2.3V10a4.8 4.8 0 0 1 9.6 0v4.2l1.2 2.3Z"/><path d="M10.4 19.2a1.8 1.8 0 0 0 3.2 0"/>'),
+  search: svg('<circle cx="11" cy="11" r="6"/><path d="m15.6 15.6 3.4 3.4"/>'),
+  filter: svg('<path d="M4 6.5h16M7 12h10M10 17.5h4"/>'),
+  calendar: svg('<rect x="4" y="5.5" width="16" height="14.5" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/>'),
+  back: svg('<path d="m14 6-6 6 6 6"/>'),
+  chevronRight: svg('<path d="m10 6 6 6-6 6"/>'),
+  chevronDown: svg('<path d="m6 10 6 6 6-6"/>'),
+  plus: svg('<path d="M12 5v14M5 12h14"/>'),
+  settings: svg('<circle cx="12" cy="12" r="3"/><path d="M19.1 14.6a1.7 1.7 0 0 0 .4 1.9 2 2 0 1 1-2.8 2.8 1.7 1.7 0 0 0-2.9 1.2 2 2 0 1 1-4 0 1.7 1.7 0 0 0-2.9-1.3 2 2 0 1 1-2.8-2.8A1.7 1.7 0 0 0 3 14.6a2 2 0 1 1 0-4 1.7 1.7 0 0 0 1.9-2.8 2 2 0 1 1 2.8-2.8A1.7 1.7 0 0 0 10.5 3.7a2 2 0 1 1 4 0 1.7 1.7 0 0 0 2.8 1.3 2 2 0 1 1 2.8 2.8 1.7 1.7 0 0 0 1.2 2.9 2 2 0 1 1 0 4 1.7 1.7 0 0 0-1.5 1.1Z"/>'),
+  graduation: svg('<path d="M3 9.4 12 5l9 4.4-9 4.4-9-4.4Z"/><path d="M6.6 11.2V16c0 1.4 2.4 2.6 5.4 2.6s5.4-1.2 5.4-2.6v-4.8"/>'),
+  userPlus: svg('<path d="M15 20v-1.4a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/><circle cx="9" cy="7.2" r="3.2"/><path d="M17.5 7.5h4M19.5 5.5v4"/>'),
+  briefcase: svg('<rect x="3" y="7.5" width="18" height="12" rx="3"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/>'),
+  clipboard: svg('<rect x="5" y="4.5" width="14" height="16.5" rx="3"/><path d="M9 3.5h6"/><path d="m9.6 13.2 1.9 1.9 3.4-3.6"/>'),
+  wallet: svg('<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/><circle cx="16.6" cy="14.8" r="1.3"/>'),
+  classes: svg('<rect x="4" y="4.5" width="16" height="15" rx="3"/><path d="M4 9.8h16M9.6 9.8v9.7"/>'),
+  message: svg('<path d="M20 11.6a7.6 7.6 0 0 1-11 6.8L5 19.6l1.3-4A7.6 7.6 0 1 1 20 11.6Z"/>'),
+  logout: svg('<path d="M15 8V5.6A1.6 1.6 0 0 0 13.4 4H6.6A1.6 1.6 0 0 0 5 5.6v12.8A1.6 1.6 0 0 0 6.6 20h6.8a1.6 1.6 0 0 0 1.6-1.6V16"/><path d="M10 12h10"/><path d="m17 9 3 3-3 3"/>'),
+  pie: svg('<path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5H12V3.5Z"/>'),
+  trending: svg('<path d="M4 16.6 9.2 11l3.4 3.4L20 7"/><path d="M15.2 7H20v4.8"/>'),
+  file: svg('<path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/>'),
+  award: svg('<circle cx="12" cy="9" r="5"/><path d="m8.6 13.4-1.5 7 4.9-2.5 4.9 2.5-1.5-7"/>'),
+  printer: svg('<path d="M7 9.5V4h10v5.5"/><rect x="4" y="9.5" width="16" height="7" rx="2.2"/><path d="M7 16.5h10V21H7z"/>'),
+  receipt: svg('<path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2v-17Z"/><path d="M9.5 8h5M9.5 12h5"/>'),
+  clock: svg('<circle cx="12" cy="12" r="8.4"/><path d="M12 7.6V12l3 2"/>'),
+  signal: svg('<path d="M3 17h2.4v3H3zM8 13h2.4v7H8zM13 9h2.4v11H13z" fill="currentColor" stroke="none"/>', 15),
+  wifi: svg('<path d="M4.5 9.6a11 11 0 0 1 15 0"/><path d="M7.6 13a6.6 6.6 0 0 1 8.8 0"/><path d="M12 16.6h.01"/>', 15),
+  battery: svg('<rect x="2.5" y="7" width="16" height="9.5" rx="2.6"/><path d="M21 10.6v3.2"/><rect x="4.6" y="9.1" width="10.5" height="5.3" rx="1.2" fill="currentColor" stroke="none"/>', 15),
+};

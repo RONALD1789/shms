@@ -79,6 +79,25 @@ The process exits, the container restart-loops, and nothing is served on port
   file logs `Changes detected, recompiling...` and the served response updates;
   the Postgres cluster and its data survive those reloads.
 
+## The portal UI (`GET /`)
+
+`portal/` serves the School Admin Portal, a mobile-first UI built from plain
+HTML/CSS/vanilla JS: `theme.ts` (design tokens + styles), `icons.ts` (inline SVG
+set), `shell.ts` (status bar, drawer, tab bar), `screens/*.ts` (one file per
+screen) and `client.ts` (routing and interactions), assembled into a single
+document by `portal/portal.ts`. It is the app root now; the API landing page
+that used to be there moved to `GET /docs`.
+
+* Screens are switched with hash routes — `#/dashboard`, `#/students`,
+  `#/reports`, `#/attendance`, `#/fees` — driven by the bottom tab bar, the
+  drawer and the quick actions.
+* All portal content is mock data taken from the design reference: the backend
+  has no students, attendance or fees endpoints, so no screen reads the
+  database. Actions the design does not define (Add Student, Logout, report
+  categories, …) show a short toast instead of navigating.
+* Check it in the preview at 360px (the target viewport) and at desktop width,
+  where the UI is centred in a phone-sized frame.
+
 ## Verify it works
 
 ```bash

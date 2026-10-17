@@ -164,15 +164,31 @@ interface User {
 }
 
 // Create a new user. Publishes a UserCreated event for downstream services.
+// Signing up with an email that already exists is idempotent: the existing user
+// is returned instead of failing, and no second UserCreated event is published.
 export const create = api(
   { expose: true, auth: false, method: "POST", path: "/users" },
   async ({ email, name }: CreateUserRequest): Promise<User> => {
+    const existing = await db.queryRow<User>`
+      SELECT id, email, name, created_at FROM users WHERE email = ${email}
+    `;
+    if (existing) return existing;
+
     const id = crypto.randomUUID();
 
-    await db.exec`
-      INSERT INTO users (id, email, name)
-      VALUES (${id}, ${email}, ${name})
-    `;
+    try {
+      await db.exec`
+        INSERT INTO users (id, email, name)
+        VALUES (${id}, ${email}, ${name})
+      `;
+    } catch (err) {
+      // Lost a race with a concurrent signup for the same email.
+      const raced = await db.queryRow<User>`
+        SELECT id, email, name, created_at FROM users WHERE email = ${email}
+      `;
+      if (raced) return raced;
+      throw err;
+    }
 
     await UserCreatedTopic.publish({ user_id: id, email, name });
 

@@ -49,6 +49,10 @@ development dashboard (`http://<sandbox>:9400/<app-id>`) and an MCP endpoint on
   its curl examples against `http://0.0.0.0:3000`; replace that with the
   sandbox's public 3000 URL.
 
+* **`POST /users` is idempotent by email** — signing up twice with the same
+  address returns the first user instead of a duplicate-key error. Handy when
+  running the verification flow below repeatedly.
+
 * **Auth is a placeholder**: authenticated endpoints read the user id from the
   `?auth_user=<user_id>` query parameter (the `auth` service's gateway). A user
   created through `POST /users` gets a free subscription auto-provisioned by the
